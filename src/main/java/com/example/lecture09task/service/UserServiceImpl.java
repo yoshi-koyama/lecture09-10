@@ -14,16 +14,15 @@ public class UserServiceImpl implements UserService{
         this.userMapper = userMapper;
     }
 
-    @Override
-    public List<User> findAll() {
-        return userMapper.findAll();
-    }
-
     public List<User> findById(int id) {
         return userMapper.findById(id);
     }
 
-    public List<User> findByAgeGreaterThan(int age) {
-        return userMapper.findByAgeGreaterThan(age);
+    public List<User> findByAge(Integer age) {
+        if (age != null) {
+            return userMapper.findByAgeGreaterThan(age);
+        } else {
+            return userMapper.findAll();
+        }
     }
 }

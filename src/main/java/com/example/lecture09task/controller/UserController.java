@@ -2,11 +2,11 @@ package com.example.lecture09task.controller;
 
 import com.example.lecture09task.entity.User;
 import com.example.lecture09task.service.UserService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class UserController {
@@ -16,19 +16,13 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/users")
-    public List<User> allusers() {
-        return userService.findAll();
-    }
-
-    @GetMapping("/users/id")
-    public List<User> selectusersid(@RequestParam (value = "id") int id) {
+    @GetMapping("/users/{id}")
+    public List<User> selectusersid(@PathVariable("id") int id) {
         return userService.findById(id);
     }
 
-    @GetMapping("/users/age")
-    public List<User> selectusersage(@RequestParam (value = "age") int age) {
-        return userService.findByAgeGreaterThan(age);
+    @GetMapping("/users")
+    public List<User> selectusersage(@RequestParam (value = "age", required = false) Integer age) {
+        return userService.findByAge(age);
     }
-
 }
