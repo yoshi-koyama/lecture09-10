@@ -16,17 +16,17 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/allusers")
+    @GetMapping("/users")
     public List<User> allusers() {
         return userService.findAll();
     }
 
-    @GetMapping("/selectusersid")
+    @GetMapping("/users/id")
     public List<User> selectusersid(@RequestParam (value = "id") int id) {
         return userService.findById(id);
     }
 
-    @GetMapping("/selectusersage")
+    @GetMapping("/users/age")
     public List<User> selectusersage(@RequestParam (value = "age") int age) {
         return userService.findByAgeGreaterThan(age);
     }
