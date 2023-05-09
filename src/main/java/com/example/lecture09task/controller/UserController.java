@@ -17,12 +17,12 @@ public class UserController {
     }
 
     @GetMapping("/users/{id}")
-    public List<User> selectusersid(@PathVariable("id") int id) {
+    public List<User> selectUserById(@PathVariable("id") int id) {
         return userService.findById(id);
     }
 
     @GetMapping("/users")
-    public List<User> selectusersage(@RequestParam (value = "age", required = false) Integer age) {
+    public List<User> selectUsersByAge(@RequestParam (value = "age", required = false) Integer age) {
         return userService.findByAge(age);
     }
 }
