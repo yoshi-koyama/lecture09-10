@@ -1,6 +1,7 @@
 package com.example.lecture09task.service;
 
 import com.example.lecture09task.entity.User;
+import com.example.lecture09task.form.CreateForm;
 import com.example.lecture09task.mapper.UserMapper;
 import org.springframework.stereotype.Service;
 
@@ -24,5 +25,9 @@ public class UserServiceImpl implements UserService{
         } else {
             return userMapper.findAll();
         }
+    }
+
+    public void createUser(CreateForm form) {
+        userMapper.createUser(form);
     }
 }
