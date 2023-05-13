@@ -27,7 +27,7 @@ public class UserServiceImpl implements UserService{
         }
     }
 
-    public void createUser(CreateForm form) {
-        userMapper.createUser(form);
+    public void createUser(User user) {
+        userMapper.createUser(user);
     }
 }

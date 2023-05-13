@@ -20,7 +20,7 @@ public interface UserMapper {
     @Select("SELECT * FROM users WHERE age > #{age}")
     List<User> findByAgeGreaterThan(int age);
 
-    @Insert("INSERT INTO users (id, name, age) VALUES (#{id}, #{name}, #{age})")
+    @Insert("INSERT INTO users (name, age) VALUES (#{name}, #{age})")
     @Options(useGeneratedKeys = true, keyProperty = "id")
-    void createUser(CreateForm form);
+    void createUser(User user);
 }

@@ -33,12 +33,13 @@ public class UserController {
     @PostMapping("/users")
     public ResponseEntity<Map<String, String>> create(
             @RequestBody @Validated CreateForm form, UriComponentsBuilder uriBuilder) {
-        userService.createUser(form);
+        User user = new User(form.getName(), form.getAge());
+        userService.createUser(user);
         URI url = uriBuilder
-                .path("/users/" + form.getId())
+                .path("/users/" + user.getId())
                 .build()
                 .toUri();
-        System.out.println("id:" + form.getId());
+        System.out.println("id:" + user.getId());
         System.out.println("name:" + form.getName());
         System.out.println("age:" + form.getAge());
         return ResponseEntity.created(url).body(Map.of("message", "user successfully created"));

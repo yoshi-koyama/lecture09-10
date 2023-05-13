@@ -8,8 +8,6 @@ import lombok.Getter;
 
 public class CreateForm {
 
-    private int id;
-
     @NotBlank
     private String name;
 
