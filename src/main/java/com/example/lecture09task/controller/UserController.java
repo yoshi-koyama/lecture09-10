@@ -39,9 +39,6 @@ public class UserController {
                 .path("/users/" + user.getId())
                 .build()
                 .toUri();
-        System.out.println("id:" + user.getId());
-        System.out.println("name:" + form.getName());
-        System.out.println("age:" + form.getAge());
         return ResponseEntity.created(url).body(Map.of("message", "user successfully created"));
     }
 }
