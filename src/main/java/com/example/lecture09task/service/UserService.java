@@ -8,5 +8,5 @@ import java.util.List;
 public interface UserService {
     List<User> findById(int id);
     List<User> findByAge(Integer age);
-    void createUser(User user);
+    User createUser(CreateForm form);
 }
