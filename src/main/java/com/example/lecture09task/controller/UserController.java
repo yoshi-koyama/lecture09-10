@@ -45,8 +45,7 @@ public class UserController {
     @PatchMapping("/users/{id}")
     public ResponseEntity<Map<String, String>> update(
             @PathVariable("id") int id, @RequestBody UpdateForm form) {
-        User updateUser = new User(id, form.getName(), form.getAge());
-        userService.updateUser(updateUser);
+        userService.updateUser(form.convertToUser(id));
         return ResponseEntity.ok(Map.of("message", "user successfully updated"));
     }
 }
