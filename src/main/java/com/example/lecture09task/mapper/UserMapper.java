@@ -1,11 +1,7 @@
 package com.example.lecture09task.mapper;
 
 import com.example.lecture09task.entity.User;
-import com.example.lecture09task.form.CreateForm;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Options;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -15,7 +11,7 @@ public interface UserMapper {
     List<User> findAll();
 
     @Select("SELECT * FROM users WHERE id = #{id}")
-    List<User> findById(int id);
+    User findById(int id);
 
     @Select("SELECT * FROM users WHERE age > #{age}")
     List<User> findByAgeGreaterThan(int age);
@@ -23,4 +19,7 @@ public interface UserMapper {
     @Insert("INSERT INTO users (name, age) VALUES (#{name}, #{age})")
     @Options(useGeneratedKeys = true, keyProperty = "id")
     void createUser(User user);
+
+    @Update("UPDATE users SET name = #{name}, age = #{age} where id = #{id}")
+    void updateUser(User updateUser);
 }
