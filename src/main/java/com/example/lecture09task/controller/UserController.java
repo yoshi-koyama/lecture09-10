@@ -65,7 +65,7 @@ public class UserController {
             ResourceNotFoundException e, HttpServletRequest request) {
         Map<String, String> body = Map.of(
                 "timestamp", ZonedDateTime.now().toString(),
-                "Status", String.valueOf(HttpStatus.NOT_FOUND.value()),
+                "status", String.valueOf(HttpStatus.NOT_FOUND.value()),
                 "error", HttpStatus.NOT_FOUND.getReasonPhrase(),
                 "message", e.getMessage(),
                 "path", request.getRequestURI());
@@ -77,7 +77,7 @@ public class UserController {
             MethodArgumentNotValidException e, HttpServletRequest request) {
         Map<String, String> body = Map.of(
                 "timestamp", ZonedDateTime.now().toString(),
-                "Status", String.valueOf(HttpStatus.BAD_REQUEST.value()),
+                "status", String.valueOf(HttpStatus.BAD_REQUEST.value()),
                 "error", HttpStatus.BAD_REQUEST.getReasonPhrase(),
                 "message", "Please enter your name and age",
                 "path", request.getRequestURI());
