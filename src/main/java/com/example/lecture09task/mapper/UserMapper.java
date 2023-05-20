@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
+import java.util.Optional;
 
 @Mapper
 public interface UserMapper {
@@ -16,7 +17,7 @@ public interface UserMapper {
     List<User> findAll();
 
     @Select("SELECT * FROM users WHERE id = #{id}")
-    User findById(int id);
+    Optional<User> findById(int id);
 
     @Select("SELECT * FROM users WHERE age > #{age}")
     List<User> findByAgeGreaterThan(int age);

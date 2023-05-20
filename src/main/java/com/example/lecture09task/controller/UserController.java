@@ -1,15 +1,20 @@
 package com.example.lecture09task.controller;
 
 import com.example.lecture09task.entity.User;
+import com.example.lecture09task.exception.ResourceNotFoundException;
 import com.example.lecture09task.form.CreateForm;
 import com.example.lecture09task.form.UpdateForm;
 import com.example.lecture09task.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -53,5 +58,29 @@ public class UserController {
     public ResponseEntity<Map<String, String>> delete(@PathVariable("id") int id) {
         userService.deleteUser(id);
         return ResponseEntity.ok(Map.of("message", "user successfully deleted"));
+    }
+
+    @ExceptionHandler(value = ResourceNotFoundException.class)
+    public ResponseEntity<Map<String, String>> handleNoResourceFound(
+            ResourceNotFoundException e, HttpServletRequest request) {
+        Map<String, String> body = Map.of(
+                "timestamp", ZonedDateTime.now().toString(),
+                "Status", String.valueOf(HttpStatus.NOT_FOUND.value()),
+                "error", HttpStatus.NOT_FOUND.getReasonPhrase(),
+                "message", e.getMessage(),
+                "path", request.getRequestURI());
+        return new ResponseEntity(body, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(value = MethodArgumentNotValidException.class)
+    public ResponseEntity<Map<String, String>> handleMethodArgumentNotValidException(
+            MethodArgumentNotValidException e, HttpServletRequest request) {
+        Map<String, String> body = Map.of(
+                "timestamp", ZonedDateTime.now().toString(),
+                "Status", String.valueOf(HttpStatus.BAD_REQUEST.value()),
+                "error", HttpStatus.BAD_REQUEST.getReasonPhrase(),
+                "message", "Please enter your name and age",
+                "path", request.getRequestURI());
+        return new ResponseEntity(body, HttpStatus.BAD_REQUEST);
     }
 }

@@ -1,6 +1,7 @@
 package com.example.lecture09task.service;
 
 import com.example.lecture09task.entity.User;
+import com.example.lecture09task.exception.ResourceNotFoundException;
 import com.example.lecture09task.form.CreateForm;
 import com.example.lecture09task.mapper.UserMapper;
 import org.springframework.stereotype.Service;
@@ -17,7 +18,7 @@ public class UserServiceImpl implements UserService{
     }
 
     public User findById(int id) {
-        return userMapper.findById(id);
+        return userMapper.findById(id).orElseThrow(() -> new ResourceNotFoundException("This id is not found"));
     }
 
     public List<User> findByAge(Integer age) {
@@ -37,7 +38,8 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public void updateUser(User updateUser) {
-        User user = userMapper.findById(updateUser.getId());
+        User user = userMapper.findById(updateUser.getId())
+                .orElseThrow(() -> new ResourceNotFoundException("This id is not found"));
         if (Objects.isNull(updateUser.getName())) {
             updateUser.setName(user.getName());
         }
@@ -48,6 +50,7 @@ public class UserServiceImpl implements UserService{
     }
 
     public void deleteUser(int id) {
+        userMapper.findById(id).orElseThrow(() -> new ResourceNotFoundException("This id is not found"));
         userMapper.deleteUser(id);
     }
 }
