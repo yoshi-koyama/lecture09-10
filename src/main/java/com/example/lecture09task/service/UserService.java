@@ -10,4 +10,5 @@ public interface UserService {
     List<User> findByAge(Integer age);
     User createUser(CreateForm form);
     void updateUser(User updateUser);
+    void deleteUser(int id);
 }
