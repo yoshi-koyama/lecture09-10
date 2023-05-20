@@ -2,6 +2,7 @@ package com.example.lecture09task.controller;
 
 import com.example.lecture09task.entity.User;
 import com.example.lecture09task.form.CreateForm;
+import com.example.lecture09task.form.UpdateForm;
 import com.example.lecture09task.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -21,7 +22,7 @@ public class UserController {
     }
 
     @GetMapping("/users/{id}")
-    public List<User> selectUserById(@PathVariable("id") int id) {
+    public User selectUserById(@PathVariable("id") int id) {
         return userService.findById(id);
     }
 
@@ -39,5 +40,12 @@ public class UserController {
                 .build()
                 .toUri();
         return ResponseEntity.created(url).body(Map.of("message", "user successfully created"));
+    }
+
+    @PatchMapping("/users/{id}")
+    public ResponseEntity<Map<String, String>> update(
+            @PathVariable("id") int id, @RequestBody UpdateForm form) {
+        userService.updateUser(form.convertToUser(id));
+        return ResponseEntity.ok(Map.of("message", "user successfully updated"));
     }
 }

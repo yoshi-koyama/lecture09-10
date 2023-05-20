@@ -6,6 +6,7 @@ import com.example.lecture09task.mapper.UserMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class UserServiceImpl implements UserService{
@@ -15,7 +16,7 @@ public class UserServiceImpl implements UserService{
         this.userMapper = userMapper;
     }
 
-    public List<User> findById(int id) {
+    public User findById(int id) {
         return userMapper.findById(id);
     }
 
@@ -32,5 +33,17 @@ public class UserServiceImpl implements UserService{
         User user = new User(form.getName(), form.getAge());
         userMapper.createUser(user);
         return user;
+    }
+
+    @Override
+    public void updateUser(User updateUser) {
+        User user = userMapper.findById(updateUser.getId());
+        if (Objects.isNull(updateUser.getName())) {
+            updateUser.setName(user.getName());
+        }
+        if (Objects.isNull(updateUser.getAge())) {
+            updateUser.setAge(user.getAge());
+        }
+        userMapper.updateUser(updateUser);
     }
 }
