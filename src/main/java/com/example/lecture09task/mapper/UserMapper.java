@@ -1,6 +1,7 @@
 package com.example.lecture09task.mapper;
 
 import com.example.lecture09task.entity.User;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
@@ -26,4 +27,7 @@ public interface UserMapper {
 
     @Update("UPDATE users SET name = #{name}, age = #{age} where id = #{id}")
     void updateUser(User updateUser);
+
+    @Delete("DELETE FROM users WHERE id = #{id}")
+    void deleteUser(int id);
 }

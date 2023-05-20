@@ -48,4 +48,10 @@ public class UserController {
         userService.updateUser(form.convertToUser(id));
         return ResponseEntity.ok(Map.of("message", "user successfully updated"));
     }
+
+    @DeleteMapping("/users/{id}")
+    public ResponseEntity<Map<String, String>> delete(@PathVariable("id") int id) {
+        userService.deleteUser(id);
+        return ResponseEntity.ok(Map.of("message", "user successfully deleted"));
+    }
 }
