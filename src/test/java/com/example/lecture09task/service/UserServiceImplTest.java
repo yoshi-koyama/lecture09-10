@@ -53,11 +53,24 @@ class UserServiceImplTest {
     @Test
     public void 指定した年齢以上のユーザーが返されること() {
         List<User> user = List.of(new User(3, "yamada", 35));
-        doReturn(user).when(userMapper).findByAgeGreaterThan(30);
+        doReturn(Optional.of(user)).when(userMapper).findByAgeGreaterThan(30);
 
         List<User> actual = userServiceImpl.findByAge(30);
         assertThat(actual).isEqualTo(user);
         verify(userMapper, times(1)).findByAgeGreaterThan(30);
+        verify(userMapper,times(0)).findAll();
+    }
+
+    @Test
+    public void 指定した年齢以上のユーザーが存在しない時に例外がスローされること() {
+
+        doReturn(Optional.empty()).when(userMapper).findByAgeGreaterThan(40);
+
+        assertThatThrownBy(() -> userServiceImpl.findByAge(40))
+                .isInstanceOfSatisfying(ResourceNotFoundException.class, e -> {
+                    assertThat(e.getMessage()).isEqualTo( "User is not found");
+                });
+        verify(userMapper, times(1)).findByAgeGreaterThan(40);
         verify(userMapper,times(0)).findAll();
     }
 

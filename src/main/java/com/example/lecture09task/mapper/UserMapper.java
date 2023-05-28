@@ -20,7 +20,7 @@ public interface UserMapper {
     Optional<User> findById(int id);
 
     @Select("SELECT * FROM users WHERE age > #{age}")
-    List<User> findByAgeGreaterThan(int age);
+    Optional<List<User>> findByAgeGreaterThan(int age);
 
     @Insert("INSERT INTO users (name, age) VALUES (#{name}, #{age})")
     @Options(useGeneratedKeys = true, keyProperty = "id")

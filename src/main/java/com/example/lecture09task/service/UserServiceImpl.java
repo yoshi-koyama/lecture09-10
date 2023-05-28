@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService{
@@ -23,7 +24,8 @@ public class UserServiceImpl implements UserService{
 
     public List<User> findByAge(Integer age) {
         if (age != null) {
-            return userMapper.findByAgeGreaterThan(age);
+            return userMapper.findByAgeGreaterThan(age)
+                    .orElseThrow(() -> new ResourceNotFoundException("User is not found"));
         } else {
             return userMapper.findAll();
         }
