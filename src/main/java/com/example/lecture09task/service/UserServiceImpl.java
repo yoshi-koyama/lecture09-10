@@ -24,8 +24,7 @@ public class UserServiceImpl implements UserService{
 
     public List<User> findByAge(Integer age) {
         if (age != null) {
-            return userMapper.findByAgeGreaterThan(age)
-                    .orElseThrow(() -> new ResourceNotFoundException("User is not found"));
+            return userMapper.findByAgeGreaterThan(age);
         } else {
             return userMapper.findAll();
         }

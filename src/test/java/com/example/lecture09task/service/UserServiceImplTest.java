@@ -10,6 +10,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -62,14 +63,12 @@ class UserServiceImplTest {
     }
 
     @Test
-    public void 指定した年齢以上のユーザーが存在しない時に例外がスローされること() {
+    public void 指定した年齢以上のユーザーが存在しない時に空のリストが返されること() {
+        List<User> emptyList = new ArrayList<>();
+        doReturn(emptyList).when(userMapper).findByAgeGreaterThan(40);
+        List<User> actual = userServiceImpl.findByAge(40);
+        assertThat(actual).isEqualTo(emptyList);
 
-        doReturn(Optional.empty()).when(userMapper).findByAgeGreaterThan(40);
-
-        assertThatThrownBy(() -> userServiceImpl.findByAge(40))
-                .isInstanceOfSatisfying(ResourceNotFoundException.class, e -> {
-                    assertThat(e.getMessage()).isEqualTo( "User is not found");
-                });
         verify(userMapper, times(1)).findByAgeGreaterThan(40);
         verify(userMapper,times(0)).findAll();
     }
