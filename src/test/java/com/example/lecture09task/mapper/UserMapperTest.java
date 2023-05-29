@@ -59,7 +59,7 @@ class UserMapperTest {
     @Test
     @DataSet(value = "datasets/users.yml")
     @Transactional
-    void 指定した年齢以上のユーザーが取得できること() {
+    void 指定した年齢より上のユーザーが取得できること() {
         assertThat(userMapper.findByAgeGreaterThan(25))
             .hasSize(2)
             .contains(
@@ -71,7 +71,7 @@ class UserMapperTest {
     @Test
     @DataSet(value = "datasets/users.yml")
     @Transactional
-    void 指定した年齢以上のユーザーが存在しない時に空のリストが返されること() {
+    void 指定した年齢より上のユーザーが存在しない時に空のリストが返されること() {
         assertThat(userMapper.findByAgeGreaterThan(35)).isEmpty();
     }
 
