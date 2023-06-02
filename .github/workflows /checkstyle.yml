@@ -18,21 +18,13 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Run docker
-        run: docker compose up -d
-
-      - name: gradle build
-        run: |
-          chmod +x ./gradlew
-          ./gradlew build
-
       - name: Run check style
-        uses: reviewdog/action-checkstyle@v1
+        uses: nikitasavinov/checkstyle-action@master
         if: always()
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          checkstyle_reporter: 'github-pr-review'
-          checkstyle_tool_name: 'checkstyle'
+          reporter: 'github-pr-check'
+          tool_name: 'reviewdog'
           checkstyle_config: 'config/checkstyle/checkstyle.xml'
           workdir: 'src/main'
           level: error
