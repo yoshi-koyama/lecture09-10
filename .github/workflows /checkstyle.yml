@@ -17,8 +17,13 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
+
+      - name: Docker run
+        run: docker compose up -d
+
       - name: Build with Gradle
         run: ./gradlew build
+
       - name: Run check style
         uses: nikitasavinov/checkstyle-action@master
         if: always()
@@ -29,4 +34,3 @@ jobs:
           checkstyle_config: 'config/checkstyle/checkstyle.xml'
           workdir: 'src/main'
           level: error
-
