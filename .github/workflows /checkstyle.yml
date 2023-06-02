@@ -27,12 +27,12 @@ jobs:
           ./gradlew build
 
       - name: Run check style
-        uses: nikitasavinov/checkstyle-action@master
+        uses: reviewdog/action-checkstyle@v1
         if: always()
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          reporter: 'github-pr-check'
-          tool_name: 'reviewdog'
+          checkstyle_reporter: 'github-pr-review'
+          checkstyle_tool_name: 'checkstyle'
           checkstyle_config: 'config/checkstyle/checkstyle.xml'
           workdir: 'src/main'
           level: error
